@@ -37,6 +37,11 @@
             this.citas = [];
         }
 
+        agregarCita (cita){
+            this.citas = [...this.citas, cita];
+            console.log('this.citas :>> ', this.citas);
+        }
+
     }
 
     class UI{
@@ -87,6 +92,7 @@
         console.log('citaObj :>> ', citaObj);
     }
 
+
     //Valida y agrega nueva cita a la clase de citas
     function nuevaCita(e){
         e.preventDefault();
@@ -99,6 +105,33 @@
             ui.mostrarAlerta('Todos los campos son obligatorios', 'error');
             return;
         }
+
+        //Generar un id unico en el objetoCita
+
+        citaObj.id = Date.now();
+
+        //Creando una nueva cita
+        adminCitas.agregarCita({...citaObj});
+
+
+        //Reiniciar objeto para validacion
+        reiniciarObjeto();
+        
+        //Limpiar formulario despues de crear una nueva cita
+        formulario.reset();
+
+    }
+
+    //Reiniciar Objeto
+    function reiniciarObjeto(){
+        
+        citaObj.mascota = '';
+        citaObj.propietario = '';
+        citaObj.telefono = '';
+        citaObj.fecha = '';
+        citaObj.hora = '';
+        citaObj.sintomas='';
+       
     }
 
 /* Objetos */
