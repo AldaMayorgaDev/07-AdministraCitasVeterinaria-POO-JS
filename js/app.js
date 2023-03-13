@@ -72,7 +72,71 @@
             setTimeout(() => {
                 divAlerta.remove();
             }, 3000);
+        };
+
+        mostrarCitas({citas}){
+            this.limpiarHTML();
+            
+            citas.forEach(cita => {
+                //Extraer informacion del objeto de citas
+                const {mascota, propietario, telefono, fecha, hora, sintomas, id} = cita;
+
+                const divCita = document.createElement('div');
+                divCita.classList.add('cita', 'p-3');
+                divCita.dataset.id = id;
+
+                //Scripting de los elementos de la cita
+                const mascotaParrafo = document.createElement('h2');
+                mascotaParrafo.classList.add('card-title', 'font-weight-bolder');
+                mascotaParrafo.textContent = mascota;
+
+                const propietarioParrafo = document.createElement('p');
+                propietarioParrafo.innerHTML = `
+                    <span class="font-weight-bolder">Propietario: </span> ${propietario}
+                `;
+
+                const telefonoParrafo = document.createElement('p');
+                telefonoParrafo.innerHTML = `
+                    <span class="font-weight-bolder">Telefono: </span> ${telefono}
+                `;
+
+                const fechaParrafo = document.createElement('p');
+                fechaParrafo.innerHTML = `
+                    <span class="font-weight-bolder">fecha: </span> ${fecha}
+                `;
+
+                const horaParrafo = document.createElement('p');
+                horaParrafo.innerHTML = `
+                    <span class="font-weight-bolder">hora: </span> ${hora}
+                `;
+
+                const sintomasParrafo = document.createElement('p');
+                sintomasParrafo.innerHTML = `
+                    <span class="font-weight-bolder">sintomas: </span> ${sintomas}
+                `;
+
+                //Agregar los parrafos al divCita
+                divCita.appendChild(mascotaParrafo);
+
+                divCita.appendChild(propietarioParrafo);
+                divCita.appendChild(telefonoParrafo);
+                divCita.appendChild(fechaParrafo);
+                divCita.appendChild(horaParrafo);
+                divCita.appendChild(sintomasParrafo);
+
+                //Agregar divCita a contenedorCitas
+                contendorCitas.appendChild(divCita);
+            });
+        };
+
+
+        limpiarHTML(){
+            while(contendorCitas.firstChild){
+                contendorCitas.removeChild(contendorCitas.firstChild);
+            }
         }
+
+        
 
     }
 
@@ -116,9 +180,13 @@
 
         //Reiniciar objeto para validacion
         reiniciarObjeto();
-        
+
         //Limpiar formulario despues de crear una nueva cita
         formulario.reset();
+
+
+        //Mostrar en HTML la cita creada
+        ui.mostrarCitas(adminCitas);
 
     }
 
