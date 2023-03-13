@@ -26,8 +26,54 @@
         fechaInput.addEventListener('input', datosCita);
         horaInput.addEventListener('input', datosCita);
         sintomasInput.addEventListener('input', datosCita);
+
+
+        formulario.addEventListener('submit', nuevaCita)
     }
 
+/* Clases */
+    class Citas{
+        constructor (){
+            this.citas = [];
+        }
+
+    }
+
+    class UI{
+
+        mostrarAlerta(mensaje, tipo){
+            //Crear Div
+            const divAlerta = document.createElement('DIV');
+            divAlerta.classList.add('text-center', 'alert', 'd-block', 'col-12');
+
+            //Valida tipo de alerta y añade clase en especifico
+            if(tipo==="error"){
+                divAlerta.classList.remove('alert-success');
+                divAlerta.classList.add('alert-danger');
+            }else{
+                divAlerta.classList.remove('alert-danger');
+                divAlerta.classList.add('alert-success');
+                
+            }
+
+            //Mensaje
+            divAlerta.textContent  = mensaje;
+
+            //Agregar al DOM
+            document.querySelector('#contenido').insertBefore(divAlerta, document.querySelector('.agregar-cita'));
+
+            //Quitar Alerta despues de 2 seg.
+
+            setTimeout(() => {
+                divAlerta.remove();
+            }, 3000);
+        }
+
+    }
+
+    //Intanciar clases de manera global
+        const ui = new UI();
+        const adminCitas = new Citas();
 
 /* Funciones */
 
@@ -41,6 +87,20 @@
         console.log('citaObj :>> ', citaObj);
     }
 
+    //Valida y agrega nueva cita a la clase de citas
+    function nuevaCita(e){
+        e.preventDefault();
+
+        //Extraer informacion del objeto de citas para validar
+        const {mascota, propietario, telefono, fecha, hora, sintomas} = citaObj;
+
+        //Validar
+        if(mascota ==='' || propietario==='' || telefono ==='' || fecha ==='' || hora  ==='' || sintomas  ===''){
+            ui.mostrarAlerta('Todos los campos son obligatorios', 'error');
+            return;
+        }
+    }
+
 /* Objetos */
 
     //Objeto con informarción de cita
@@ -52,3 +112,4 @@
         hora :'',
         sintomas:''
     }
+
